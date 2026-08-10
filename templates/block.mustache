@@ -1,0 +1,34 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    @package    block_gradingdashboard
+    @copyright  2026 M. AFZAL RIAZ
+    @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+}}
+<div class="block-gradingdashboard-container">
+    {{#hascourses}}
+        <div class="block-gradingdashboard-list">
+            {{#courses}}
+                {{> block_gradingdashboard/course_card}}
+            {{/courses}}
+        </div>
+    {{/hascourses}}
+    {{^hascourses}}
+        <div class="block-gradingdashboard-empty">
+            <div class="block-gradingdashboard-empty-icon mb-3">
+                <span aria-hidden="true">🎉</span>
+            </div>
+            <p class="mb-0">{{#str}} emptyqueue, block_gradingdashboard {{/str}}</p>
+        </div>
+    {{/hascourses}}
+</div>
+
+{{#js}}
+require(['block_gradingdashboard/tree', 'jquery'], function(Tree, $) {
+    Tree.init();
+    // Initialise Bootstrap 5 tooltips safely if tooltip plugin is loaded.
+    if ($.fn.tooltip) {
+        $('[data-bs-toggle="tooltip"]').tooltip({html: true});
+    }
+});
+{{/js}}

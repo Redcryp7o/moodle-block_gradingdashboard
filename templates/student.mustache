@@ -1,0 +1,34 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    @package    block_gradingdashboard
+    @copyright  2026 M. AFZAL RIAZ
+    @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+}}
+<div class="block-gradingdashboard-student-item d-flex justify-content-between align-items-center">
+    <div class="block-gradingdashboard-student-info d-flex align-items-center">
+        <span class="block-gradingdashboard-severity-dot block-gradingdashboard-severity-dot--{{severity}}" aria-hidden="true"></span>
+        <div class="block-gradingdashboard-avatar">
+            {{{profileimage}}}
+        </div>
+        <div class="block-gradingdashboard-student-details">
+            <span class="block-gradingdashboard-student-name d-block">
+                {{fullname}}
+            </span>
+            <span class="block-gradingdashboard-submitted-date d-block">
+                {{submittedat}}
+                {{#islate}}
+                    <span class="block-gradingdashboard-late-badge">{{#str}} late, block_gradingdashboard {{/str}}</span>
+                {{/islate}}
+            </span>
+        </div>
+    </div>
+    <div class="block-gradingdashboard-student-actions d-flex align-items-center">
+        <span class="block-gradingdashboard-status-badge me-3">
+            {{submissionstatus}}
+        </span>
+        <a href="{{gradeurl}}" class="block-gradingdashboard-grade-btn" aria-label="{{#str}} gradesubmissionfor, block_gradingdashboard, {{fullname}} {{/str}}">
+            {{#str}} grade, block_gradingdashboard {{/str}}
+        </a>
+    </div>
+</div>

@@ -1,0 +1,53 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    @package    block_gradingdashboard
+    @copyright  2026 M. AFZAL RIAZ
+    @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+}}
+<div class="card block-gradingdashboard-card block-gradingdashboard-tree-node {{#expanded}}block-gradingdashboard-expanded{{/expanded}}" data-courseid="{{id}}" data-severity="{{severity}}">
+    <div class="d-flex justify-content-between align-items-center block-gradingdashboard-card-header">
+        <div class="block-gradingdashboard-course-info d-flex align-items-center">
+            <div class="block-gradingdashboard-icon">
+                <span class="block-gradingdashboard-course-icon-symbol" aria-hidden="true">{{iconletter}}</span>
+            </div>
+            <div>
+                <h5 class="card-title mb-0">
+                    <a href="{{courseurl}}">{{fullname}}</a>
+                </h5>
+            </div>
+        </div>
+        <div class="block-gradingdashboard-actions d-flex align-items-center">
+            <div class="block-gradingdashboard-badge-container d-flex align-items-center"
+                 data-bs-toggle="tooltip"
+                 data-bs-html="true"
+                 data-bs-placement="top"
+                 title="Pending: {{pendingcount}}<br>🟢 {{#str}} severity_fresh, block_gradingdashboard {{/str}}: {{freshcount}}<br>🟠 {{#str}} severity_waiting, block_gradingdashboard {{/str}}: {{waitingcount}}<br>🔴 {{#str}} severity_overdue, block_gradingdashboard {{/str}}: {{overduecount}}"
+                 aria-label="Pending: {{pendingcount}}"
+                 tabindex="0">
+                <span class="block-gradingdashboard-severity-dot block-gradingdashboard-severity-dot--{{severity}}" aria-hidden="true"></span>
+                <span class="block-gradingdashboard-badge-count">
+                    {{pendingcount}}
+                </span>
+            </div>
+            {{#hassections}}
+                <button class="block-gradingdashboard-toggle"
+                        type="button"
+                        aria-expanded="{{#expanded}}true{{/expanded}}{{^expanded}}false{{/expanded}}"
+                        aria-controls="block-gradingdashboard-sections-{{id}}"
+                        aria-label="{{#str}} expandcourse, block_gradingdashboard, {{fullname}} {{/str}}">
+                    <span class="block-gradingdashboard-toggle-icon">
+                        {{#pix}} t/collapsed, core {{/pix}}
+                    </span>
+                </button>
+            {{/hassections}}
+        </div>
+    </div>
+    {{#hassections}}
+        <div id="block-gradingdashboard-sections-{{id}}" class="block-gradingdashboard-section-list">
+            {{#sections}}
+                {{> block_gradingdashboard/course_section}}
+            {{/sections}}
+        </div>
+    {{/hassections}}
+</div>

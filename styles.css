@@ -1,0 +1,705 @@
+/**
+ * Grading Dashboard block styles — Premium Design System.
+ *
+ * Token palette:
+ *   Slate   neutral backgrounds, borders, muted text
+ *   Blue    primary interactive (inherits Moodle --primary)
+ *   Emerald fresh / on-time severity
+ *   Amber   waiting / near-due severity
+ *   Rose    overdue severity
+ *
+ * @package    block_gradingdashboard
+ * @copyright  2026 M. AFZAL RIAZ
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+/* ============================================================
+   1. DESIGN TOKENS
+   ============================================================ */
+.block-gradingdashboard-container {
+
+    /* Spacing (8-pt grid) */
+    --gq-sp-1: 4px;
+    --gq-sp-2: 8px;
+    --gq-sp-3: 12px;
+    --gq-sp-4: 16px;
+    --gq-sp-5: 20px;
+    --gq-sp-6: 24px;
+
+    /* Border radius */
+    --gq-r-sm:   6px;
+    --gq-r-md:   10px;
+    --gq-r-lg:   14px;
+    --gq-r-full: 9999px;
+
+    /* Slate */
+    --gq-slate-50:  #f8fafc;
+    --gq-slate-100: #f1f5f9;
+    --gq-slate-200: #e2e8f0;
+    --gq-slate-300: #cbd5e1;
+    --gq-slate-400: #94a3b8;
+    --gq-slate-500: #64748b;
+    --gq-slate-600: #475569;
+    --gq-slate-700: #334155;
+    --gq-slate-800: #1e293b;
+    --gq-slate-900: #0f172a;
+
+    /* Blue — pulls Moodle --primary when present */
+    --gq-blue:       var(--primary, #2563eb);
+    --gq-blue-light: rgba(37, 99, 235, 0.08);
+    --gq-blue-mid:   rgba(37, 99, 235, 0.14);
+    --gq-navy:       #1e3a8a;
+
+    /* Severity */
+    --gq-emerald:       #10b981;
+    --gq-emerald-light: rgba(16, 185, 129, 0.10);
+    --gq-emerald-ring:  rgba(16, 185, 129, 0.25);
+
+    --gq-amber:       #f59e0b;
+    --gq-amber-light: rgba(245, 158, 11, 0.10);
+    --gq-amber-ring:  rgba(245, 158, 11, 0.25);
+
+    --gq-rose:       #f43f5e;
+    --gq-rose-light: rgba(244, 63, 94, 0.10);
+    --gq-rose-ring:  rgba(244, 63, 94, 0.25);
+
+    /* Shadows */
+    --gq-shadow-sm:    0 1px 4px rgba(15,23,42,0.06), 0 2px 6px rgba(15,23,42,0.04);
+    --gq-shadow-hover: 0 8px 24px rgba(15,23,42,0.10), 0 2px 6px rgba(15,23,42,0.05);
+
+    /* Easing */
+    --gq-fast:   150ms cubic-bezier(0.4, 0, 0.2, 1);
+    --gq-normal: 220ms cubic-bezier(0.4, 0, 0.2, 1);
+    --gq-slow:   300ms cubic-bezier(0.4, 0, 0.2, 1);
+
+    width: 100%;
+    font-family: inherit;
+}
+
+
+/* ============================================================
+   2. COURSE CARD
+   ============================================================ */
+.block-gradingdashboard-card {
+    background: #ffffff;
+    border: 1px solid var(--gq-slate-200);
+    border-radius: var(--gq-r-lg);
+    box-shadow: var(--gq-shadow-sm);
+    overflow: hidden;
+    margin-bottom: var(--gq-sp-4);
+    transition:
+        box-shadow var(--gq-normal),
+        border-color var(--gq-normal),
+        transform var(--gq-normal);
+}
+
+.block-gradingdashboard-card:hover {
+    box-shadow: var(--gq-shadow-hover);
+    border-color: var(--gq-slate-300);
+    transform: translateY(-1px);
+}
+
+.block-gradingdashboard-card-header {
+    padding: var(--gq-sp-4) var(--gq-sp-5);
+}
+
+/* Course icon circle */
+.block-gradingdashboard-icon {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--gq-blue-light);
+    margin-right: var(--gq-sp-3);
+    transition: background var(--gq-fast);
+}
+
+.block-gradingdashboard-card:hover .block-gradingdashboard-icon {
+    background: var(--gq-blue-mid);
+}
+
+.block-gradingdashboard-course-icon-symbol {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--gq-blue);
+    line-height: 1;
+}
+
+/* Course title */
+.block-gradingdashboard-card-header .card-title,
+.block-gradingdashboard-card-header .card-title a {
+    font-size: 0.975rem;
+    font-weight: 600;
+    color: var(--gq-slate-800);
+    line-height: 1.3;
+    text-decoration: none !important;
+    transition: color var(--gq-fast);
+}
+
+.block-gradingdashboard-card-header .card-title a:hover {
+    color: var(--gq-blue);
+}
+
+
+/* ============================================================
+   3. SECTION ROW
+   ============================================================ */
+.block-gradingdashboard-section-list {
+    background: var(--gq-slate-50);
+}
+
+.block-gradingdashboard-section-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--gq-sp-3) var(--gq-sp-5);
+    border-bottom: 1px solid var(--gq-slate-100);
+    border-left: 3px solid transparent;
+    background: var(--gq-slate-50);
+    transition: background var(--gq-fast), border-left-color var(--gq-fast);
+}
+
+.block-gradingdashboard-section-item:hover {
+    background: var(--gq-slate-100);
+    border-left-color: var(--gq-navy);
+}
+
+.block-gradingdashboard-section-icon {
+    display: inline-flex;
+    align-items: center;
+    color: var(--gq-slate-400);
+    margin-right: var(--gq-sp-2);
+    font-size: 0.85rem;
+}
+
+.block-gradingdashboard-section-name {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--gq-slate-700);
+}
+
+
+/* ============================================================
+   4. ASSIGNMENT ROW
+   ============================================================ */
+.block-gradingdashboard-assignment-list {
+    background: #ffffff;
+}
+
+.block-gradingdashboard-assignment-item {
+    border-bottom: 1px solid var(--gq-slate-100);
+    border-left: 3px solid transparent;
+    padding: var(--gq-sp-3) var(--gq-sp-5) var(--gq-sp-3) var(--gq-sp-6);
+    background: #ffffff;
+    transition: background var(--gq-fast), border-left-color var(--gq-fast);
+}
+
+.block-gradingdashboard-assignment-item:hover {
+    background: var(--gq-slate-50);
+    border-left-color: var(--gq-navy);
+}
+
+.block-gradingdashboard-activity-icon-container {
+    display: inline-flex;
+    align-items: center;
+    margin-right: var(--gq-sp-2);
+    color: var(--gq-slate-400);
+    font-size: 0.85rem;
+}
+
+.block-gradingdashboard-assignment-name a {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--gq-slate-700);
+    text-decoration: none;
+    transition: color var(--gq-fast);
+}
+
+.block-gradingdashboard-assignment-name a:hover {
+    color: var(--gq-blue);
+    text-decoration: underline;
+}
+
+
+/* ============================================================
+   5. STUDENT ROW
+   ============================================================ */
+.block-gradingdashboard-student-list {
+    background: #ffffff;
+}
+
+.block-gradingdashboard-student-item {
+    padding: var(--gq-sp-3) var(--gq-sp-5) var(--gq-sp-3) calc(var(--gq-sp-6) + var(--gq-sp-4));
+    border-bottom: 1px solid var(--gq-slate-100);
+    border-left: 3px solid transparent;
+    background: #ffffff;
+    transition: background var(--gq-fast), border-left-color var(--gq-fast);
+}
+
+.block-gradingdashboard-student-item:hover {
+    background: var(--gq-slate-50);
+    border-left-color: var(--gq-navy);
+}
+
+.block-gradingdashboard-avatar {
+    flex-shrink: 0;
+    margin-right: var(--gq-sp-2);
+}
+
+.block-gradingdashboard-avatar img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid var(--gq-slate-200);
+    object-fit: cover;
+    display: block;
+}
+
+.block-gradingdashboard-student-name {
+    font-size: 0.845rem;
+    font-weight: 500;
+    color: var(--gq-slate-700);
+    line-height: 1.4;
+}
+
+.block-gradingdashboard-submitted-date {
+    font-size: 0.78rem;
+    color: var(--gq-slate-400);
+    line-height: 1.4;
+    margin-top: 1px;
+}
+
+
+/* ============================================================
+   6. BADGES — Severity dot + count pill
+   ============================================================ */
+.block-gradingdashboard-severity-dot {
+    display: inline-block;
+    flex-shrink: 0;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    margin-right: var(--gq-sp-2);
+}
+
+.block-gradingdashboard-severity-dot--success {
+    background-color: var(--gq-emerald);
+    box-shadow: 0 0 0 3px var(--gq-emerald-ring);
+}
+
+.block-gradingdashboard-severity-dot--warning {
+    background-color: var(--gq-amber);
+    box-shadow: 0 0 0 3px var(--gq-amber-ring);
+}
+
+.block-gradingdashboard-severity-dot--danger {
+    background-color: var(--gq-rose);
+    box-shadow: 0 0 0 3px var(--gq-rose-ring);
+}
+
+/* Count pill */
+.block-gradingdashboard-badge-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 24px;
+    height: 22px;
+    padding: 0 var(--gq-sp-2);
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1;
+    color: var(--gq-slate-600);
+    background: var(--gq-slate-100);
+    border: 1px solid var(--gq-slate-200);
+    border-radius: var(--gq-r-full);
+    letter-spacing: 0.01em;
+}
+
+/* Tooltip container */
+.block-gradingdashboard-badge-container {
+    display: inline-flex;
+    align-items: center;
+    cursor: help;
+    outline: none;
+    padding: var(--gq-sp-1) var(--gq-sp-2);
+    border-radius: var(--gq-r-sm);
+    transition: background var(--gq-fast);
+}
+
+.block-gradingdashboard-badge-container:hover {
+    background: var(--gq-slate-100);
+}
+
+.block-gradingdashboard-badge-container:focus-visible {
+    outline: 2px solid var(--gq-blue);
+    outline-offset: 2px;
+}
+
+/* Late badge */
+.block-gradingdashboard-late-badge {
+    font-size: 0.68rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.04em;
+    padding: 2px 6px !important;
+    border-radius: var(--gq-r-full) !important;
+    background-color: var(--gq-rose) !important;
+    border: none !important;
+    color: #ffffff !important;
+    vertical-align: middle;
+}
+
+/* Status badge */
+.block-gradingdashboard-status-badge {
+    font-size: 0.72rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.03em;
+    padding: 3px 10px !important;
+    border-radius: var(--gq-r-full) !important;
+    background-color: var(--gq-slate-100) !important;
+    color: var(--gq-slate-600) !important;
+    border: 1px solid var(--gq-slate-200) !important;
+}
+
+
+/* ============================================================
+   7. TOGGLE BUTTONS (chevrons)
+   ============================================================ */
+.block-gradingdashboard-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: transparent;
+    border-radius: 50%;
+    cursor: pointer;
+    color: var(--gq-slate-400);
+    transition: background var(--gq-fast), color var(--gq-fast);
+    outline: none;
+}
+
+.block-gradingdashboard-toggle:hover {
+    background: var(--gq-slate-100);
+    color: var(--gq-slate-600);
+}
+
+.block-gradingdashboard-toggle:focus-visible {
+    outline: 2px solid var(--gq-blue);
+    outline-offset: 2px;
+}
+
+.block-gradingdashboard-toggle-icon img,
+.block-gradingdashboard-toggle-icon svg,
+.block-gradingdashboard-toggle-icon i,
+.block-gradingdashboard-toggle-icon span {
+    display: inline-block;
+    transition: transform var(--gq-fast);
+}
+
+/* Rotation — level-scoped to prevent bleed */
+.block-gradingdashboard-card.block-gradingdashboard-expanded > .block-gradingdashboard-card-header .block-gradingdashboard-toggle-icon img,
+.block-gradingdashboard-card.block-gradingdashboard-expanded > .block-gradingdashboard-card-header .block-gradingdashboard-toggle-icon svg,
+.block-gradingdashboard-card.block-gradingdashboard-expanded > .block-gradingdashboard-card-header .block-gradingdashboard-toggle-icon i,
+.block-gradingdashboard-card.block-gradingdashboard-expanded > .block-gradingdashboard-card-header .block-gradingdashboard-toggle-icon span,
+.block-gradingdashboard-section-container.block-gradingdashboard-expanded > .block-gradingdashboard-section-item .block-gradingdashboard-toggle-icon img,
+.block-gradingdashboard-section-container.block-gradingdashboard-expanded > .block-gradingdashboard-section-item .block-gradingdashboard-toggle-icon svg,
+.block-gradingdashboard-section-container.block-gradingdashboard-expanded > .block-gradingdashboard-section-item .block-gradingdashboard-toggle-icon i,
+.block-gradingdashboard-section-container.block-gradingdashboard-expanded > .block-gradingdashboard-section-item .block-gradingdashboard-toggle-icon span,
+.block-gradingdashboard-assignment-item.block-gradingdashboard-expanded > div > .block-gradingdashboard-assignment-actions .block-gradingdashboard-toggle-icon img,
+.block-gradingdashboard-assignment-item.block-gradingdashboard-expanded > div > .block-gradingdashboard-assignment-actions .block-gradingdashboard-toggle-icon svg,
+.block-gradingdashboard-assignment-item.block-gradingdashboard-expanded > div > .block-gradingdashboard-assignment-actions .block-gradingdashboard-toggle-icon i,
+.block-gradingdashboard-assignment-item.block-gradingdashboard-expanded > div > .block-gradingdashboard-assignment-actions .block-gradingdashboard-toggle-icon span {
+    transform: rotate(90deg);
+}
+
+
+/* ============================================================
+   8. EXPAND / COLLAPSE (CSS-only)
+   ============================================================ */
+.block-gradingdashboard-section-list,
+.block-gradingdashboard-assignment-list,
+.block-gradingdashboard-student-list {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height var(--gq-slow) ease, opacity var(--gq-normal) ease;
+}
+
+.block-gradingdashboard-card.block-gradingdashboard-expanded > .block-gradingdashboard-section-list,
+.block-gradingdashboard-section-container.block-gradingdashboard-expanded > .block-gradingdashboard-assignment-list,
+.block-gradingdashboard-assignment-item.block-gradingdashboard-expanded > .block-gradingdashboard-student-list {
+    max-height: 2400px;
+    opacity: 1;
+}
+
+
+/* ============================================================
+   9. GRADE BUTTON
+   ============================================================ */
+.block-gradingdashboard-grade-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+    padding: 0 var(--gq-sp-4);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: #ffffff;
+    background: var(--gq-blue);
+    border: none;
+    border-radius: var(--gq-r-full);
+    text-decoration: none !important;
+    white-space: nowrap;
+    transition: background var(--gq-fast), box-shadow var(--gq-fast), transform var(--gq-fast);
+    cursor: pointer;
+}
+
+.block-gradingdashboard-grade-btn:hover {
+    background: #1d4ed8;
+    box-shadow: 0 3px 10px rgba(37, 99, 235, 0.35);
+    transform: translateY(-1px);
+    color: #ffffff;
+}
+
+.block-gradingdashboard-grade-btn:focus-visible {
+    outline: 2px solid var(--gq-blue);
+    outline-offset: 2px;
+}
+
+.block-gradingdashboard-grade-btn:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+
+/* ============================================================
+   10. SKELETON SHIMMER
+   ============================================================ */
+.block-gradingdashboard-skeleton-row {
+    display: flex;
+    align-items: center;
+    padding: var(--gq-sp-3) var(--gq-sp-5) var(--gq-sp-3) calc(var(--gq-sp-6) + var(--gq-sp-4));
+    border-bottom: 1px solid var(--gq-slate-100);
+    gap: var(--gq-sp-3);
+}
+
+.block-gradingdashboard-skeleton {
+    border-radius: var(--gq-r-sm);
+    background: linear-gradient(
+        90deg,
+        var(--gq-slate-100) 25%,
+        var(--gq-slate-200) 45%,
+        var(--gq-slate-100) 65%
+    );
+    background-size: 400% 100%;
+    animation: gq-shimmer 1.5s ease infinite;
+}
+
+.block-gradingdashboard-skeleton--avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.block-gradingdashboard-skeleton--name {
+    height: 12px;
+    width: 140px;
+    border-radius: var(--gq-r-full);
+}
+
+.block-gradingdashboard-skeleton--meta {
+    height: 10px;
+    width: 90px;
+    border-radius: var(--gq-r-full);
+}
+
+.block-gradingdashboard-skeleton--btn {
+    height: 26px;
+    width: 54px;
+    border-radius: var(--gq-r-full);
+    margin-left: auto;
+    flex-shrink: 0;
+}
+
+@keyframes gq-shimmer {
+    0%   { background-position: 100% 50%; }
+    100% { background-position:   0% 50%; }
+}
+
+
+/* ============================================================
+   11. EMPTY STATE
+   ============================================================ */
+.block-gradingdashboard-empty {
+    padding: var(--gq-sp-6);
+    background: var(--gq-emerald-light);
+    border: 1px dashed var(--gq-emerald-ring) !important;
+    border-radius: var(--gq-r-lg) !important;
+    text-align: center;
+}
+
+.block-gradingdashboard-empty-icon span {
+    display: inline-block;
+    animation: gq-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes gq-pulse {
+    0%, 100% { transform: scale(1);    }
+    50%       { transform: scale(1.1); }
+}
+
+
+/* ============================================================
+   12. RESPONSIVE — MOBILE
+   ============================================================ */
+@media (max-width: 768px) {
+
+    .block-gradingdashboard-card-header {
+        padding: var(--gq-sp-3) var(--gq-sp-4);
+    }
+
+    .block-gradingdashboard-section-item {
+        padding: var(--gq-sp-2) var(--gq-sp-4);
+    }
+
+    .block-gradingdashboard-assignment-item {
+        padding: var(--gq-sp-2) var(--gq-sp-4) var(--gq-sp-2) var(--gq-sp-5);
+    }
+
+    .block-gradingdashboard-student-item {
+        flex-direction: column;
+        align-items: flex-start !important;
+        padding: var(--gq-sp-3) var(--gq-sp-4) var(--gq-sp-3) var(--gq-sp-5);
+        gap: var(--gq-sp-2);
+    }
+
+    .block-gradingdashboard-student-info {
+        width: 100%;
+    }
+
+    .block-gradingdashboard-student-actions {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: var(--gq-sp-2);
+    }
+
+    .block-gradingdashboard-grade-btn {
+        min-height: 44px;
+        padding: 0 var(--gq-sp-5);
+        font-size: 0.85rem;
+        flex-grow: 1;
+    }
+
+    .block-gradingdashboard-icon {
+        width: 32px;
+        height: 32px;
+    }
+
+    .block-gradingdashboard-toggle {
+        width: 36px;
+        height: 36px;
+    }
+}
+
+
+/* ============================================================
+   13. BOOTSTRAP CARD RESET
+   Neutralise Bootstrap's own .card base styles so they don't
+   fight the design tokens above.
+   ============================================================ */
+.block-gradingdashboard-card.card {
+    border: none;       /* We set our own border above */
+    box-shadow: none;   /* We set our own shadow above  */
+    border-radius: 0;   /* We set our own radius above  */
+}
+
+/* Re-apply our own styles after the reset (specificity win) */
+.block-gradingdashboard-container .block-gradingdashboard-card {
+    border: 1px solid var(--gq-slate-200);
+    border-radius: var(--gq-r-lg);
+    box-shadow: var(--gq-shadow-sm);
+    overflow: hidden;
+}
+
+.block-gradingdashboard-container .block-gradingdashboard-card:hover {
+    box-shadow: var(--gq-shadow-hover);
+    border-color: var(--gq-slate-300);
+    transform: translateY(-1px);
+}
+
+
+/* ============================================================
+   14. SEVERITY TOP ACCENT LINE
+   A 3px coloured strip across the top of each course card.
+   ============================================================ */
+.block-gradingdashboard-card::before {
+    content: '';
+    display: block;
+    height: 3px;
+    border-radius: var(--gq-r-lg) var(--gq-r-lg) 0 0;
+    background: var(--gq-navy);
+    transition: background var(--gq-normal);
+}
+
+
+/* ============================================================
+   15. TREE GUIDE LINES
+   A subtle vertical hairline on the left edge of the nested
+   section + assignment containers, visually anchoring the
+   indent hierarchy.
+   ============================================================ */
+.block-gradingdashboard-section-list {
+    position: relative;
+}
+
+.block-gradingdashboard-section-list::before {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--gq-slate-200);
+    border-radius: 2px;
+    pointer-events: none;
+}
+
+.block-gradingdashboard-assignment-list {
+    position: relative;
+}
+
+.block-gradingdashboard-assignment-list::before {
+    content: '';
+    position: absolute;
+    left: 32px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--gq-slate-100);
+    border-radius: 2px;
+    pointer-events: none;
+}
+
+
+/* ============================================================
+   16. EMPTY STATE — TYPOGRAPHY
+   ============================================================ */
+.block-gradingdashboard-empty p {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--gq-emerald);
+}
+
+.block-gradingdashboard-empty-icon span {
+    font-size: 2.4rem;
+    line-height: 1;
+}

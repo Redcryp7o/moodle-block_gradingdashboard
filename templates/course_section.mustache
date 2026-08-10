@@ -1,0 +1,49 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    @package    block_gradingdashboard
+    @copyright  2026 M. AFZAL RIAZ
+    @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+}}
+<div class="block-gradingdashboard-section-container block-gradingdashboard-tree-node {{#expanded}}block-gradingdashboard-expanded{{/expanded}}" data-sectionid="{{id}}">
+    <div class="block-gradingdashboard-section-item">
+        <div class="block-gradingdashboard-section-info d-flex align-items-center">
+            <span class="block-gradingdashboard-section-icon" aria-hidden="true">
+                {{#pix}} i/folder, core {{/pix}}
+            </span>
+            <span class="block-gradingdashboard-section-name">{{name}}</span>
+        </div>
+        <div class="block-gradingdashboard-section-actions d-flex align-items-center">
+            <div class="block-gradingdashboard-badge-container d-flex align-items-center"
+                 data-bs-toggle="tooltip"
+                 data-bs-html="true"
+                 data-bs-placement="top"
+                 title="Pending: {{pendingcount}}<br>🟢 {{#str}} severity_fresh, block_gradingdashboard {{/str}}: {{freshcount}}<br>🟠 {{#str}} severity_waiting, block_gradingdashboard {{/str}}: {{waitingcount}}<br>🔴 {{#str}} severity_overdue, block_gradingdashboard {{/str}}: {{overduecount}}"
+                 aria-label="Pending: {{pendingcount}}"
+                 tabindex="0">
+                <span class="block-gradingdashboard-severity-dot block-gradingdashboard-severity-dot--{{severity}}" aria-hidden="true"></span>
+                <span class="block-gradingdashboard-badge-count">
+                    {{pendingcount}}
+                </span>
+            </div>
+            {{#hasassignments}}
+                <button class="block-gradingdashboard-toggle block-gradingdashboard-section-toggle"
+                        type="button"
+                        aria-expanded="{{#expanded}}true{{/expanded}}{{^expanded}}false{{/expanded}}"
+                        aria-controls="block-gradingdashboard-assignments-{{id}}"
+                        aria-label="{{#str}} expandsection, block_gradingdashboard, {{name}} {{/str}}">
+                    <span class="block-gradingdashboard-toggle-icon">
+                        {{#pix}} t/collapsed, core {{/pix}}
+                    </span>
+                </button>
+            {{/hasassignments}}
+        </div>
+    </div>
+    {{#hasassignments}}
+        <div id="block-gradingdashboard-assignments-{{id}}" class="block-gradingdashboard-assignment-list">
+            {{#assignments}}
+                {{> block_gradingdashboard/assignment}}
+            {{/assignments}}
+        </div>
+    {{/hasassignments}}
+</div>
