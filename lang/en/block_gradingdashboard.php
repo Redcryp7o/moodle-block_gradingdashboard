@@ -1,4 +1,19 @@
 <?php
+// This file is part of Moodle - https://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
+
 /**
  * Language strings for the Grading Dashboard block.
  *
@@ -28,6 +43,10 @@ $string['gradesubmissionfor'] = 'Grade submission for {$a}';
 $string['severity_fresh'] = 'Fresh (< 24h)';
 $string['severity_waiting'] = 'Waiting (1–3 days)';
 $string['severity_overdue'] = 'Overdue (> 3 days)';
+
+// Pending badge accessibility / tooltip strings.
+$string['pendingcount'] = 'Pending: {$a}';
+$string['pendingtooltip'] = 'Pending: {$a->pending}<br>🟢 {$a->fresh}: {$a->freshcount}<br>🟠 {$a->waiting}: {$a->waitingcount}<br>🔴 {$a->overdue}: {$a->overduecount}';
 
 // Accessibility strings for expand / collapse controls.
 $string['expandcourse'] = 'Expand course: {$a}';

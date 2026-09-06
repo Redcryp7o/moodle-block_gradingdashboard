@@ -1,4 +1,19 @@
 <?php
+// This file is part of Moodle - https://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
+
 /**
  * Course Card Renderable.
  *
@@ -97,12 +112,25 @@ class course_card implements renderable, templatable {
         // Derive the icon letter: first non-whitespace character of shortname, else fullname.
         $iconletter = strtoupper(mb_substr(trim($this->shortname ?: $this->fullname), 0, 1, 'UTF-8'));
 
+        $pendingarialabel = get_string('pendingcount', 'block_gradingdashboard', $this->pendingcount);
+        $pendingtooltip = get_string('pendingtooltip', 'block_gradingdashboard', (object) [
+            'pending' => $this->pendingcount,
+            'fresh' => get_string('severity_fresh', 'block_gradingdashboard'),
+            'freshcount' => $this->freshcount,
+            'waiting' => get_string('severity_waiting', 'block_gradingdashboard'),
+            'waitingcount' => $this->waitingcount,
+            'overdue' => get_string('severity_overdue', 'block_gradingdashboard'),
+            'overduecount' => $this->overduecount,
+        ]);
+
         return [
             'id'           => $this->id,
             'fullname'     => $this->fullname,
             'iconletter'   => $iconletter,
             'severity'     => $this->severity,
             'pendingcount' => $this->pendingcount,
+            'pendingarialabel' => $pendingarialabel,
+            'pendingtooltip' => $pendingtooltip,
             'freshcount'   => $this->freshcount,
             'waitingcount' => $this->waitingcount,
             'overduecount' => $this->overduecount,
