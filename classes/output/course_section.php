@@ -24,8 +24,6 @@
 
 namespace block_gradingdashboard\output;
 
-defined('MOODLE_INTERNAL') || die();
-
 use renderable;
 use templatable;
 use renderer_base;
@@ -37,7 +35,6 @@ use stdClass;
  * Models a single course section displaying pending grades count.
  */
 class course_section implements renderable, templatable {
-
     /** @var int Section ID. */
     protected int $id;
 

@@ -24,8 +24,6 @@
 
 namespace block_gradingdashboard\output;
 
-defined('MOODLE_INTERNAL') || die();
-
 use renderable;
 use templatable;
 use renderer_base;
@@ -36,7 +34,6 @@ use renderer_base;
  * Main renderable block that holds course cards or empty state information.
  */
 class block implements renderable, templatable {
-
     /** @var array List of course cards. */
     protected array $coursecards = [];
 

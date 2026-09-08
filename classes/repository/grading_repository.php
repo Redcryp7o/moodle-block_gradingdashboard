@@ -28,8 +28,6 @@
 
 namespace block_gradingdashboard\repository;
 
-defined('MOODLE_INTERNAL') || die();
-
 use dml_exception;
 
 /**
@@ -38,7 +36,6 @@ use dml_exception;
  * Direct database access class using Moodle DML APIs.
  */
 class grading_repository {
-
     /**
      * Fetch raw pending grading counts grouped by course, section, and assignment from the database.
      *
@@ -57,8 +54,8 @@ class grading_repository {
             'modulename'    => 'assign',
             'status'        => 'submitted',
             'latest'        => 1,
-            'enrolstatus'   => 0, // ENROL_INSTANCE_ENABLED
-            'uestatus'      => 0, // ENROL_USER_ACTIVE
+            'enrolstatus'   => 0, // ENROL_INSTANCE_ENABLED.
+            'uestatus'      => 0, // ENROL_USER_ACTIVE.
             'releasedstate' => 'released',
             'now1'          => time(),
             'now2'          => time(),
@@ -67,9 +64,9 @@ class grading_repository {
             'now5'          => time(),
         ];
 
-        $where = "s.status = :status 
-                  AND s.latest = :latest 
-                  AND u.deleted = 0 
+        $where = "s.status = :status
+                  AND s.latest = :latest
+                  AND u.deleted = 0
                   AND u.suspended = 0
                   AND EXISTS (
                       SELECT 1
@@ -83,24 +80,38 @@ class grading_repository {
                   AND (
                       (a.markingworkflow = 1 AND (uf.workflowstate IS NULL OR uf.workflowstate <> :releasedstate))
                       OR
-                      (a.markingworkflow = 0 AND (g.grade IS NULL OR g.grade < 0 OR g.timemodified IS NULL OR s.timemodified > g.timemodified))
+                      (a.markingworkflow = 0 AND (g.grade IS NULL
+                                                  OR g.grade < 0
+                                                  OR g.timemodified IS NULL
+                                                  OR s.timemodified > g.timemodified))
                   )";
 
         if ($courseids !== null) {
             // Safe, database-portable mapping of array parameters.
-            list($insql, $inparams) = $DB->get_in_or_equal($courseids, SQL_PARAMS_NAMED);
+            [$insql, $inparams] = $DB->get_in_or_equal($courseids, SQL_PARAMS_NAMED);
             $where .= " AND c.id $insql";
             $params = array_merge($params, $inparams);
         }
 
         $sql = "SELECT cm.id AS uniqueid,
-                       c.id AS courseid, c.fullname AS coursefullname, c.shortname AS courseshortname, c.visible AS coursevisible, c.format AS courseformat,
-                       cs.id AS sectionid, cs.section AS sectionnum, cs.name AS sectionname, cs.visible AS sectionvisible,
-                       a.id AS assignid, a.name AS assignname, cm.id AS cmid, a.duedate AS duedate,
+                       c.id AS courseid,
+                       c.fullname AS coursefullname,
+                       c.shortname AS courseshortname,
+                       c.visible AS coursevisible,
+                       c.format AS courseformat,
+                       cs.id AS sectionid,
+                       cs.section AS sectionnum,
+                       cs.name AS sectionname,
+                       cs.visible AS sectionvisible,
+                       a.id AS assignid,
+                       a.name AS assignname,
+                       cm.id AS cmid,
+                       a.duedate AS duedate,
                        COUNT(s.id) AS pendingcount,
                        MIN(s.timemodified) AS oldest_submission,
                        SUM(CASE WHEN (:now1 - s.timemodified) <= 86400 THEN 1 ELSE 0 END) AS freshcount,
-                       SUM(CASE WHEN (:now2 - s.timemodified) > 86400 AND (:now3 - s.timemodified) <= 259200 THEN 1 ELSE 0 END) AS waitingcount,
+                       SUM(CASE WHEN (:now2 - s.timemodified) > 86400
+                                 AND (:now3 - s.timemodified) <= 259200 THEN 1 ELSE 0 END) AS waitingcount,
                        SUM(CASE WHEN (:now4 - s.timemodified) > 259200 THEN 1 ELSE 0 END) AS overduecount
                   FROM {course} c
                   JOIN {course_sections} cs ON cs.course = c.id
@@ -109,12 +120,13 @@ class grading_repository {
                   JOIN {assign} a ON a.id = cm.instance
                   JOIN {assign_submission} s ON s.assignment = a.id
                   JOIN {user} u ON u.id = s.userid
-             LEFT JOIN {assign_grades} g ON g.assignment = a.id 
-                                       AND g.userid = s.userid 
+             LEFT JOIN {assign_grades} g ON g.assignment = a.id
+                                       AND g.userid = s.userid
                                        AND g.attemptnumber = s.attemptnumber
              LEFT JOIN {assign_user_flags} uf ON uf.assignment = a.id AND uf.userid = s.userid
                  WHERE $where
-              GROUP BY cm.id, c.id, c.fullname, c.shortname, c.visible, c.format, cs.id, cs.section, cs.name, cs.visible, a.id, a.name, a.duedate
+              GROUP BY cm.id, c.id, c.fullname, c.shortname, c.visible, c.format,
+                       cs.id, cs.section, cs.name, cs.visible, a.id, a.name, a.duedate
               ORDER BY c.fullname ASC, cs.section ASC, a.name ASC";
 
         try {
@@ -190,7 +202,10 @@ class grading_repository {
                    AND (
                        (a.markingworkflow = 1 AND (uf.workflowstate IS NULL OR uf.workflowstate <> :releasedstate))
                        OR
-                       (a.markingworkflow = 0 AND (g.grade IS NULL OR g.grade < 0 OR g.timemodified IS NULL OR s.timemodified > g.timemodified))
+                       (a.markingworkflow = 0 AND (g.grade IS NULL
+                                                   OR g.grade < 0
+                                                   OR g.timemodified IS NULL
+                                                   OR s.timemodified > g.timemodified))
                    )
               ORDER BY s.timemodified ASC";
 
@@ -198,8 +213,8 @@ class grading_repository {
             'assignmentid'  => $assignmentid,
             'status'        => 'submitted',
             'latest'        => 1,
-            'enrolstatus'   => 0, // ENROL_INSTANCE_ENABLED
-            'uestatus'      => 0, // ENROL_USER_ACTIVE
+            'enrolstatus'   => 0, // ENROL_INSTANCE_ENABLED.
+            'uestatus'      => 0, // ENROL_USER_ACTIVE.
             'releasedstate' => 'released',
         ];
 

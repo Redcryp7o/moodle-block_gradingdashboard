@@ -27,6 +27,78 @@ define(['core/ajax', 'core/templates', 'core/notification', 'core/str'], functio
 
     var initialized = false;
 
+    /**
+     * Show skeleton placeholders while assignment students load.
+     *
+     * @param {HTMLElement} target The student list container.
+     */
+    function showStudentSkeletons(target) {
+        Templates.renderForPromise('block_gradingdashboard/student_skeleton', {}).then(function(res) {
+            if (target.dataset.loaded !== 'true') {
+                target.innerHTML = res.html;
+            }
+            return res;
+        }).catch(Notification.exception);
+    }
+
+    /**
+     * Render loaded student rows into the assignment target.
+     *
+     * @param {HTMLElement} target The student list container.
+     * @param {Object[]} results Rendered student template payloads.
+     */
+    function renderStudentResults(target, results) {
+        var html = results.map(function(res) {
+            return res.html;
+        }).join('');
+
+        target.innerHTML = html;
+        target.dataset.loaded = 'true';
+
+        results.forEach(function(res) {
+            Templates.runTemplateJS(res.js);
+        });
+    }
+
+    /**
+     * Load and render students for an expanded assignment node.
+     *
+     * @param {HTMLElement} target The student list container.
+     * @param {HTMLElement} toggle The assignment toggle button.
+     * @param {HTMLElement} node The assignment tree node.
+     */
+    function loadAssignmentStudents(target, toggle, node) {
+        var cmid = toggle.dataset.cmid;
+        var ajaxPromise = Ajax.call([{
+            methodname: 'block_gradingdashboard_get_assignment_students',
+            args: {cmid: parseInt(cmid, 10)}
+        }])[0];
+
+        showStudentSkeletons(target);
+
+        ajaxPromise.then(function(data) {
+            if (!data.students || data.students.length === 0) {
+                return Str.get_string('allcaughtup', 'block_gradingdashboard');
+            }
+            return Promise.all(data.students.map(function(student) {
+                return Templates.renderForPromise('block_gradingdashboard/student', student);
+            }));
+        }).then(function(result) {
+            if (typeof result === 'string') {
+                target.innerHTML = '<div class="text-muted p-3 text-center">' + result + '</div>';
+                target.dataset.loaded = 'true';
+                return result;
+            }
+            renderStudentResults(target, result);
+            return result;
+        }).catch(function(error) {
+            Notification.exception(error);
+            target.innerHTML = '';
+            toggle.setAttribute('aria-expanded', 'false');
+            node.classList.remove('block-gradingdashboard-expanded');
+        });
+    }
+
     return {
         /**
          * Initialize event delegation handlers for block toggle actions.
@@ -67,52 +139,7 @@ define(['core/ajax', 'core/templates', 'core/notification', 'core/str'], functio
                         node.classList.add('block-gradingdashboard-expanded');
 
                         if (target.dataset.loaded !== 'true') {
-                            // Show skeletons from mustache template.
-                            Templates.renderForPromise('block_gradingdashboard/student_skeleton', {}).then(function(res) {
-                                if (target.dataset.loaded !== 'true') {
-                                    target.innerHTML = res.html;
-                                }
-                            }).catch(Notification.exception);
-
-                            // Extract CMID directly from toggle button dataset.
-                            var cmid = toggle.dataset.cmid;
-
-                            Ajax.call([{
-                                methodname: 'block_gradingdashboard_get_assignment_students',
-                                args: {cmid: parseInt(cmid, 10)}
-                            }])[0].then(function(data) {
-                                if (!data.students || data.students.length === 0) {
-                                    return Str.get_string('allcaughtup', 'block_gradingdashboard').then(function(allcaughtup) {
-                                        target.innerHTML = '<div class="text-muted p-3 text-center">' +
-                                            allcaughtup + '</div>';
-                                        target.dataset.loaded = 'true';
-                                    });
-                                }
-
-                                var promises = data.students.map(function(student) {
-                                    return Templates.renderForPromise('block_gradingdashboard/student', student);
-                                });
-
-                                return Promise.all(promises).then(function(results) {
-                                    var html = results.map(function(res) {
-                                        return res.html;
-                                    }).join('');
-
-                                    target.innerHTML = html;
-                                    target.dataset.loaded = 'true';
-
-                                    // Execute any template scripts if necessary.
-                                    results.forEach(function(res) {
-                                        Templates.runTemplateJS(res.js);
-                                    });
-                                    return;
-                                });
-                            }).catch(function(error) {
-                                Notification.exception(error);
-                                target.innerHTML = '';
-                                toggle.setAttribute('aria-expanded', 'false');
-                                node.classList.remove('block-gradingdashboard-expanded');
-                            });
+                            loadAssignmentStudents(target, toggle, node);
                         }
                     }
                 } else {

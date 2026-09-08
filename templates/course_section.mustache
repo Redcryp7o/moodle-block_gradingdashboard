@@ -17,6 +17,19 @@
     @template block_gradingdashboard/course_section
     @copyright  2026 M. AFZAL RIAZ
     @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+
+    Example context (json):
+    {
+        "id": 5,
+        "name": "Week 1",
+        "pendingcount": 2,
+        "pendingarialabel": "Pending: 2",
+        "pendingtooltip": "Pending: 2",
+        "severity": "fresh",
+        "expanded": false,
+        "hasassignments": false,
+        "assignments": []
+    }
 }}
 <div class="block-gradingdashboard-section-container block-gradingdashboard-tree-node {{#expanded}}block-gradingdashboard-expanded{{/expanded}}" data-sectionid="{{id}}">
     <div class="block-gradingdashboard-section-item">

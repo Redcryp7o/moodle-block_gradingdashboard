@@ -22,8 +22,6 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Block gradingdashboard class.
  *
@@ -31,7 +29,6 @@ defined('MOODLE_INTERNAL') || die();
  * Only shows courses where the current user has the mod/assign:grade capability.
  */
 class block_gradingdashboard extends block_base {
-
     /**
      * Initialise the block title.
      *

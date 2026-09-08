@@ -24,8 +24,6 @@
 
 namespace block_gradingdashboard\output;
 
-defined('MOODLE_INTERNAL') || die();
-
 use renderable;
 use templatable;
 use renderer_base;
@@ -38,7 +36,6 @@ use moodle_url;
  * Models a single assignment node displaying pending grades count.
  */
 class course_assignment implements renderable, templatable {
-
     /** @var int Assignment ID. */
     protected int $id;
 
@@ -143,7 +140,7 @@ class course_assignment implements renderable, templatable {
             'overduecount' => $this->overduecount,
             'icon' => $output->pix_icon('monologo', get_string('pluginname', 'mod_assign'), 'mod_assign', [
                 'class' => 'activityicon block-gradingdashboard-activity-icon',
-                'aria-hidden' => 'true'
+                'aria-hidden' => 'true',
             ]),
             'expanded' => $this->expanded,
             'haschildren' => !empty($childrendata),
@@ -151,7 +148,7 @@ class course_assignment implements renderable, templatable {
             'toggleurl' => $toggleurl->out(false),
             'assignmenturl' => (new moodle_url('/mod/assign/view.php', [
                 'id' => $this->cmid,
-                'action' => 'grading'
+                'action' => 'grading',
             ]))->out(false),
         ];
     }

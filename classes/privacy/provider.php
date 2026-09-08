@@ -25,8 +25,6 @@
 
 namespace block_gradingdashboard\privacy;
 
-defined('MOODLE_INTERNAL') || die();
-
 use core_privacy\local\metadata\null_provider;
 
 /**
@@ -36,7 +34,6 @@ use core_privacy\local\metadata\null_provider;
  * Moodle tables. It does not store, transmit, or process any personal data of its own.
  */
 class provider implements null_provider {
-
     /**
      * Returns the language string key that explains why no personal data is stored.
      *

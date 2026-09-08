@@ -24,8 +24,6 @@
 
 namespace block_gradingdashboard\output;
 
-defined('MOODLE_INTERNAL') || die();
-
 use plugin_renderer_base;
 
 /**
@@ -34,7 +32,6 @@ use plugin_renderer_base;
  * Custom plugin renderer that handles output rendering via Mustache templates.
  */
 class renderer extends plugin_renderer_base {
-
     /**
      * Render the main block content.
      *

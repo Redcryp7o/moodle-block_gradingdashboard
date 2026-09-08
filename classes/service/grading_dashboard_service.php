@@ -24,8 +24,6 @@
 
 namespace block_gradingdashboard\service;
 
-defined('MOODLE_INTERNAL') || die();
-
 use block_gradingdashboard\repository\grading_repository;
 use stdClass;
 use context_course;
@@ -37,7 +35,6 @@ use Exception;
  * Implements business logic, permission verification, and data coordination.
  */
 class grading_dashboard_service {
-
     /** @var grading_repository The repository instance. */
     protected grading_repository $repository;
 
@@ -204,7 +201,7 @@ class grading_dashboard_service {
 
                 // Add assignment to section.
                 $assignment = (object)[
-                    'id' => (int)$record->assignid, // assignment ID.
+                    'id' => (int)$record->assignid, // Assignment ID.
                     'cmid' => $cmid,
                     'assignmentid' => (int)$record->assignid,
                     'title' => format_string($record->assignname, true, ['context' => $cm->context]),
@@ -235,7 +232,7 @@ class grading_dashboard_service {
                         // to prevent SQL column collisions with submission fields (e.g. s.userid, s.id).
                         // We map those prefixed fields back here into a clean stdClass with canonical names.
                         $userrecord = new \stdClass();
-                        // u_id is the {user}.id — distinct from s.id (submission PK) and s.userid.
+                        // The u_id alias holds {user}.id, distinct from s.id (submission PK) and s.userid.
                         $userrecord->id = (int)$studentrecord->u_id;
 
                         // Map all name fields back from their u_-prefixed aliases.
@@ -244,9 +241,9 @@ class grading_dashboard_service {
                         }
 
                         // Map user picture fields back from their u_-prefixed aliases.
-                        $userrecord->picture  = $studentrecord->u_picture  ?? 0;
+                        $userrecord->picture  = $studentrecord->u_picture ?? 0;
                         $userrecord->imagealt = $studentrecord->u_imagealt ?? '';
-                        $userrecord->email    = $studentrecord->u_email    ?? '';
+                        $userrecord->email    = $studentrecord->u_email ?? '';
 
                         $student = (object)[
                             'userid'        => (int)$studentrecord->userid,
@@ -285,8 +282,9 @@ class grading_dashboard_service {
 
                 // Aggregate severity for course.
                 $courseseverity = $courses[$courseid]->severity;
-                if (self::severity_rank($courses[$courseid]->sections[$sectionid]->severity) > self::severity_rank($courseseverity)) {
-                    $courses[$courseid]->severity = $courses[$courseid]->sections[$sectionid]->severity;
+                $aggregatedseverity = $courses[$courseid]->sections[$sectionid]->severity;
+                if (self::severity_rank($aggregatedseverity) > self::severity_rank($courseseverity)) {
+                    $courses[$courseid]->severity = $aggregatedseverity;
                 }
             }
 

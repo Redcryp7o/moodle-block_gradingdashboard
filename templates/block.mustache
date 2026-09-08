@@ -17,6 +17,26 @@
     @template block_gradingdashboard/block
     @copyright  2026 M. AFZAL RIAZ
     @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+
+    Example context (json):
+    {
+        "hascourses": true,
+        "courses": [
+            {
+                "id": 2,
+                "fullname": "Mathematics 101",
+                "iconletter": "M",
+                "severity": "waiting",
+                "pendingcount": 3,
+                "pendingarialabel": "Pending: 3",
+                "pendingtooltip": "Pending: 3",
+                "expanded": false,
+                "courseurl": "https://example.com/course/view.php?id=2",
+                "hassections": false,
+                "sections": []
+            }
+        ]
+    }
 }}
 <div class="block-gradingdashboard-container">
     {{#hascourses}}

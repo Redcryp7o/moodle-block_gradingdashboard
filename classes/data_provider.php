@@ -24,8 +24,6 @@
 
 namespace block_gradingdashboard;
 
-defined('MOODLE_INTERNAL') || die();
-
 use block_gradingdashboard\service\grading_dashboard_service;
 
 /**
@@ -34,7 +32,6 @@ use block_gradingdashboard\service\grading_dashboard_service;
  * Fetches course data and pending grading counts efficiently.
  */
 class data_provider {
-
     /** @var grading_dashboard_service The service instance. */
     protected grading_dashboard_service $service;
 

@@ -17,6 +17,21 @@
     @template block_gradingdashboard/course_card
     @copyright  2026 M. AFZAL RIAZ
     @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+
+    Example context (json):
+    {
+        "id": 2,
+        "fullname": "Mathematics 101",
+        "iconletter": "M",
+        "severity": "waiting",
+        "pendingcount": 3,
+        "pendingarialabel": "Pending: 3",
+        "pendingtooltip": "Pending: 3",
+        "expanded": false,
+        "courseurl": "https://example.com/course/view.php?id=2",
+        "hassections": false,
+        "sections": []
+    }
 }}
 <div class="card block-gradingdashboard-card block-gradingdashboard-tree-node {{#expanded}}block-gradingdashboard-expanded{{/expanded}}" data-courseid="{{id}}" data-severity="{{severity}}">
     <div class="d-flex justify-content-between align-items-center block-gradingdashboard-card-header">

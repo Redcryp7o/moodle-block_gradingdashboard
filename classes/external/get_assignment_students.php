@@ -24,8 +24,6 @@
 
 namespace block_gradingdashboard\external;
 
-defined('MOODLE_INTERNAL') || die();
-
 use core_external\external_api;
 use core_external\external_function_parameters;
 use core_external\external_single_structure;
@@ -39,7 +37,6 @@ use context_module;
  * Fetches pending submissions for an assignment.
  */
 class get_assignment_students extends external_api {
-
     /**
      * Define parameters for external function.
      *

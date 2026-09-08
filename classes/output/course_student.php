@@ -24,8 +24,6 @@
 
 namespace block_gradingdashboard\output;
 
-defined('MOODLE_INTERNAL') || die();
-
 use renderable;
 use templatable;
 use renderer_base;
@@ -38,7 +36,6 @@ use moodle_url;
  * Models a single student submission node.
  */
 class course_student implements renderable, templatable {
-
     /** @var int Student User ID. */
     protected int $userid;
 

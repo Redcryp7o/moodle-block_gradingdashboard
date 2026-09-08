@@ -17,6 +17,21 @@
     @template block_gradingdashboard/student
     @copyright  2026 M. AFZAL RIAZ
     @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+
+    Example context (json):
+    {
+        "userid": 4,
+        "submissionid": 20,
+        "attemptnumber": 0,
+        "fullname": "Alex Student",
+        "profileimage": "<img src=\"pix-placeholder.png\" alt=\"\">",
+        "submittedat": "Monday, 1 September 2026, 10:00 AM",
+        "status": "submitted",
+        "islate": false,
+        "severity": "waiting",
+        "gradeurl": "https://example.com/mod/assign/view.php?id=15&action=grader&userid=4",
+        "submissionstatus": "Submitted for grading"
+    }
 }}
 <div class="block-gradingdashboard-student-item d-flex justify-content-between align-items-center">
     <div class="block-gradingdashboard-student-info d-flex align-items-center">

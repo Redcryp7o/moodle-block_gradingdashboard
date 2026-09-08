@@ -17,6 +17,23 @@
     @template block_gradingdashboard/assignment
     @copyright  2026 M. AFZAL RIAZ
     @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+
+    Example context (json):
+    {
+        "id": 10,
+        "cmid": 15,
+        "assignmentid": 7,
+        "title": "Essay 1",
+        "pendingcount": 1,
+        "pendingarialabel": "Pending: 1",
+        "pendingtooltip": "Pending: 1",
+        "severity": "overdue",
+        "icon": "<img src=\"pix-placeholder.png\" alt=\"\">",
+        "expanded": false,
+        "haschildren": false,
+        "children": [],
+        "assignmenturl": "https://example.com/mod/assign/view.php?id=15"
+    }
 }}
 <div id="block-gradingdashboard-assign-{{cmid}}" class="block-gradingdashboard-assignment-item block-gradingdashboard-tree-node {{#expanded}}block-gradingdashboard-expanded{{/expanded}}" data-assignmentid="{{assignmentid}}">
     <div class="d-flex justify-content-between align-items-center">
